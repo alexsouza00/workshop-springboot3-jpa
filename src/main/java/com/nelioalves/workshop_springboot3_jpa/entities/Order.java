@@ -1,6 +1,7 @@
 package com.nelioalves.workshop_springboot3_jpa.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.nelioalves.workshop_springboot3_jpa.entities.enums.OrderStatus;
 import jakarta.persistence.*;
 
 import java.time.Instant;
@@ -14,7 +15,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Instant moment;
-  //  private OrderStatus orderStatus;
+
+    private Integer orderStatus;
 
     @JsonIgnore
     @ManyToOne
@@ -25,9 +27,10 @@ public class Order {
 
     }
 
-    public Order(Long id, Instant moment, User client) {
+    public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
         this.id = id;
         this.moment = moment;
+        setOrderStatus(orderStatus);
         this.client = client;
     }
 
@@ -46,6 +49,15 @@ public class Order {
     public void setMoment(Instant moment) {
         this.moment = moment;
     }
+
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.orderValueOf(orderStatus);
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        if(orderStatus != null){
+        this.orderStatus = orderStatus.getCode();
+    }}
 
     public User getClient() {
         return client;

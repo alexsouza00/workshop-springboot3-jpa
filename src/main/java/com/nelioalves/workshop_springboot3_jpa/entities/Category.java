@@ -3,7 +3,9 @@ package com.nelioalves.workshop_springboot3_jpa.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_category")
@@ -14,7 +16,8 @@ public class Category implements Serializable {
     private Long id;
     private String name;
 
-    //private Set<Product> products = new HashSet<>();
+    @Transient
+    private Set<Product> products = new HashSet<>();
 
     public Category(){}
 
@@ -38,6 +41,8 @@ public class Category implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+
 
     @Override
     public boolean equals(Object o) {

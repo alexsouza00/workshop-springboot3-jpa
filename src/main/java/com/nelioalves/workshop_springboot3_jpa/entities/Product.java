@@ -1,5 +1,6 @@
 package com.nelioalves.workshop_springboot3_jpa.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -19,7 +20,7 @@ public class Product implements Serializable {
     private Double price;
     private String imgUrl;
 
-    @Transient
+    @ManyToMany(mappedBy = "products")
     private Set<Category> categories = new HashSet<>();
 
     public Product(){}

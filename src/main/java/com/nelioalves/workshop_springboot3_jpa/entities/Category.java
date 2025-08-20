@@ -1,5 +1,6 @@
 package com.nelioalves.workshop_springboot3_jpa.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -16,7 +17,9 @@ public class Category implements Serializable {
     private Long id;
     private String name;
 
-    @Transient
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(name = "tb_products_categories", joinColumns = @JoinColumn(name = "category_id"), inverseJoinColumns = @JoinColumn (name = "product_id"))
     private Set<Product> products = new HashSet<>();
 
     public Category(){}
@@ -42,7 +45,9 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-
+    public Set<Product> getProducts() {
+        return products;
+    }
 
     @Override
     public boolean equals(Object o) {

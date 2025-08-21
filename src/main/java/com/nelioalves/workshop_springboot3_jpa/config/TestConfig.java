@@ -1,14 +1,8 @@
 package com.nelioalves.workshop_springboot3_jpa.config;
 
-import com.nelioalves.workshop_springboot3_jpa.entities.Category;
-import com.nelioalves.workshop_springboot3_jpa.entities.Order;
-import com.nelioalves.workshop_springboot3_jpa.entities.Product;
-import com.nelioalves.workshop_springboot3_jpa.entities.User;
+import com.nelioalves.workshop_springboot3_jpa.entities.*;
 import com.nelioalves.workshop_springboot3_jpa.entities.enums.OrderStatus;
-import com.nelioalves.workshop_springboot3_jpa.repositories.CategoryRepository;
-import com.nelioalves.workshop_springboot3_jpa.repositories.OrderRepository;
-import com.nelioalves.workshop_springboot3_jpa.repositories.ProductRepository;
-import com.nelioalves.workshop_springboot3_jpa.repositories.UserRepository;
+import com.nelioalves.workshop_springboot3_jpa.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +27,9 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+
 
 
     public void run(String... args ) throws Exception{
@@ -48,27 +45,19 @@ public class TestConfig implements CommandLineRunner {
         Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
 
 
-        p2.getCategories().add(cat1);
         cat1.getProducts().add(p2);
 
-        p2.getCategories().add(cat3);
         cat3.getProducts().add(p2);
 
-        p3.getCategories().add(cat3);
         cat3.getProducts().add(p3);
 
-        p4.getCategories().add(cat3);
         cat3.getProducts().add(p4);
 
-        p5.getCategories().add(cat2);
         cat2.getProducts().add(p5);
 
         productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
         categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 
-
-        categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
-        productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
 
 
 
@@ -81,6 +70,13 @@ public class TestConfig implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(u1, u2));
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+
+        OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+        OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+        OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+
+        orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
 
     }
 

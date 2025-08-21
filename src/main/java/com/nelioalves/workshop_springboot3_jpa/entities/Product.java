@@ -1,6 +1,5 @@
 package com.nelioalves.workshop_springboot3_jpa.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;

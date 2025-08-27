@@ -32,11 +32,24 @@ public class UserResource {
         return ResponseEntity.ok().body(user);
     }
 
+    //metodo http post
     @PostMapping
+    //ele precisa de um json no body que seja do tipo User
     public ResponseEntity<User> insert(@RequestBody User obj) {
-        obj = service.insert(obj);
+        //aqui ele esta adicionando o objeto fornecido no banco de dados
+         service.insert(obj);
+        //estamos pegando o endereço
+        //ele começa chamando uma classe para construir a uri e depois um
+        // metodo para pegar o caminho em que a requisição foi feita, depois ele cria uma
+        // viariavel temporaria com o id que vai ser definido posteriormente no proximo metodo
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).body(obj);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
